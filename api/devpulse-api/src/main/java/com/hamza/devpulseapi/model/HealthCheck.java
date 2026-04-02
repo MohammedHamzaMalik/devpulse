@@ -1,5 +1,6 @@
 package com.hamza.devpulseapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ public class HealthCheck {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "endpoint_id")
     private Endpoint endpoint;
