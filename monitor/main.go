@@ -139,6 +139,17 @@ func main() {
 	log.Println("DevPulse Monitor starting...")
 	log.Printf("Checking every %s", interval)
 
+	// Retry on startup until API is ready
+	for {
+		_, err := fetchActiveEndpoints()
+		if err == nil {
+			log.Println("API is ready")
+			break
+		}
+		log.Printf("API not ready yet, retrying in 5s: %v", err)
+		time.Sleep(5 * time.Second)
+	}
+
 	// Run immediately on startup
 	runChecks()
 
