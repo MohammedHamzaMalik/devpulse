@@ -6,15 +6,25 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"sync"
 	"time"
 )
 
 const (
-	apiBase    = "http://localhost:8080"
 	monitorKey = "devpulse-monitor-secret-2024"
 	interval   = 30 * time.Second
 )
+
+func getAPIBase() string {
+	base := os.Getenv("API_BASE")
+	if base == "" {
+		base = "http://localhost:8080" // default to local dev
+	}
+	return base
+}
+
+var apiBase = getAPIBase()
 
 type Endpoint struct {
 	ID  int    `json:"id"`
